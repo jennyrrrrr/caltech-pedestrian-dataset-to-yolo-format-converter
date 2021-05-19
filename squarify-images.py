@@ -1,5 +1,6 @@
 import glob
-import Image
+# import Image
+from PIL import Image
 
 frame_size = (640, 640)
 directory = 'images'

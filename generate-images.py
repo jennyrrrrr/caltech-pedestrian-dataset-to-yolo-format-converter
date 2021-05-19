@@ -15,17 +15,32 @@ if not os.path.exists(out_dir):
 	os.makedirs(out_dir)
 
 def convert(dir):
+	# print(os.getcwd())
 	for dname in sorted(glob.glob(dir)):
 		for fn in sorted(glob.glob('{}/*.seq'.format(dname))):
 			cap = cv.VideoCapture(fn)
-			i = 0
-			while True:
+			# # i = 0
+			# count = 0
+			# while True:
+			# 	ret, frame = cap.read()
+			# 	if not ret:
+			# 		break
+			# 	else :
+			# 		save_img(dname, fn, i, frame)
+			# 	# i += 1
+			count = 0
+			while cap.isOpened():
 				ret, frame = cap.read()
-				if not ret:
+
+				if ret:
+					frameId = cap.get(count)
+					save_img(dname, fn, frameId, frame)
+					count += 500
+				else:
+					cap.release()
 					break
-				save_img(dname, fn, i, frame)
-				i += 1
 			print(fn)
+
 
 convert('../caltech/train*')
 convert('../caltech/test*')
