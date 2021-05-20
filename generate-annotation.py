@@ -44,8 +44,9 @@ for caltech_set in sorted(glob.glob('../caltech/annotations/set*')):
 
 		# traverse frames
 		for frame_id, obj in enumerate(obj_lists):
-			if len(obj) > 0:
-
+			# print(len(obj) > 0 & frame_id % 750 == 0)
+			if (len(obj) > 0) and (frame_id != 0) and (frame_id % 750 == 0):
+				print(frame_id)
 				# traverse labels
 				labels = ''
 				for pedestrian_id, pedestrian_pos in zip(obj['id'][0], obj['pos'][0]):
