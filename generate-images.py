@@ -10,7 +10,7 @@ def save_img(dname, fn, i, frame):
 		out_dir, os.path.basename(dname),
 		os.path.basename(fn).split('.')[0], i), frame)
 
-out_dir = 'images2'
+out_dir = 'images'
 if not os.path.exists(out_dir):
 	os.makedirs(out_dir)
 
@@ -19,17 +19,19 @@ def convert(dir):
 	for dname in sorted(glob.glob(dir)):
 		for fn in sorted(glob.glob('{}/*.seq'.format(dname))):
 			vidcap = cv.VideoCapture(fn)
+			success, image = vidcap.read()
 
-			# if vidcap.isOpened():
-			# 	success, image = vidcap.read()
-			# else:
-			# 	success = False
+			# count = 0
 
-			# timeF = 18
-			
+			# while vidcap.isOpened():
+			# 	success,image = vidcap.read()
+			# 	if success:
+			# 		save_img(dname, fn, count, image)
+			# 		count += 300
+			# 		vidcap.set(1, coun)
 
-			# TRAIL
-			# total_frames = vidcap.get(cv.CAP_PROP_FRAME_COUNT)
+			# # TRAIL
+			# # total_frames = vidcap.get(cv.CAP_PROP_FRAME_COUNT)
 			# fps = vidcap.get(cv.CAP_PROP_FPS)
 			# est_video_length_minutes = 1         # Round up if not sure.
 			# est_tot_frames = est_video_length_minutes * 60 * fps
@@ -42,18 +44,18 @@ def convert(dir):
 			# 		frameId = vidcap.get(i*frames_step)  
 			# 		#save your image
 			# 		save_img(dname, fn, i*frames_step, image)
-			# TRAIL
-			# seconds = 30
-			# fps = vidcap.get(cv.CAP_PROP_FPS) # Gets the frames per second
-			# multiplier = fps * seconds
+			# # TRAIL
+			seconds = 15
+			fps = vidcap.get(cv.CAP_PROP_FPS) # Gets the frames per second
+			multiplier = fps * seconds
 
-			# while success:
-			# 		frameId = int(round(vidcap.get(1))) #current frame number, rounded b/c sometimes you get frame intervals which aren't integers...this adds a little imprecision but is likely good enough
-			# 		success, image = vidcap.read()
+			while success:
+					frameId = int(round(vidcap.get(1))) #current frame number, rounded b/c sometimes you get frame intervals which aren't integers...this adds a little imprecision but is likely good enough
+					success, image = vidcap.read()
 
-			# 		if frameId % multiplier == 0:
-			# 				# cv.imwrite("FolderSeconds/frame%d.jpg" % frameId, image)
-			# 				save_img(dname, fn, frameId, image)
+					if frameId % multiplier == 0:
+							# cv.imwrite("FolderSeconds/frame%d.jpg" % frameId, image)
+							save_img(dname, fn, frameId, image)
 
 
 			# fps = vidcap.get(cv.CAP_PROP_FPS)
